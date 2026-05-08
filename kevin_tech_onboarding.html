@@ -1,0 +1,941 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="theme-color" content="#FFD84D" />
+<title>KEVIN · План стажування технічного спеціаліста</title>
+<meta name="description" content="Інтерактивний роудмап онбордингу технічного спеціаліста KEVIN. 9 кроків від першого мітингу до повноцінного виходу в роботу." />
+
+<!-- Open Graph -->
+<meta property="og:title" content="KEVIN · План стажування" />
+<meta property="og:description" content="Інтерактивний роудмап онбордингу технічного спеціаліста KEVIN" />
+<meta property="og:type" content="website" />
+
+<!-- Favicon (KEVIN K, inline SVG) -->
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='20' fill='%23FFD84D'/%3E%3Ctext x='50' y='72' font-family='serif' font-size='70' font-weight='900' text-anchor='middle' fill='%231A1A1A'%3EK%3C/text%3E%3C/svg%3E" />
+
+<!-- Fonts -->
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,800;9..144,900&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+
+<style>
+  :root {
+    --yellow: #FFD84D;
+    --yellow-dark: #F5C800;
+    --yellow-deep: #C49A00;
+    --yellow-soft: #FFF4C2;
+    --cream: #FAFAF0;
+    --cream-alt: #FFFDF0;
+    --black: #1A1A1A;
+    --dark: #2A2A2A;
+    --mid: #555;
+    --gray: #888;
+    --red: #E8522A;
+    --green: #2E8B47;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Manrope', -apple-system, BlinkMacSystemFont, sans-serif;
+    background: var(--cream);
+    color: var(--black);
+    line-height: 1.5;
+    overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  a { color: inherit; }
+  button { font-family: inherit; cursor: pointer; }
+
+  /* ===== Animations ===== */
+  @keyframes pulse-ring {
+    0%, 100% { transform: scale(1); opacity: 0.4; }
+    50% { transform: scale(1.15); opacity: 0; }
+  }
+  @keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-8px); }
+  }
+  @keyframes shimmer {
+    0% { background-position: -200% 0; }
+    100% { background-position: 200% 0; }
+  }
+  @keyframes confetti-fall {
+    0% { transform: translateY(-100vh) rotate(0deg); opacity: 1; }
+    100% { transform: translateY(100vh) rotate(720deg); opacity: 0; }
+  }
+  @keyframes pop-in {
+    0% { transform: scale(0); opacity: 0; }
+    70% { transform: scale(1.1); }
+    100% { transform: scale(1); opacity: 1; }
+  }
+  @keyframes slide-up {
+    0% { transform: translateY(40px); opacity: 0; }
+    100% { transform: translateY(0); opacity: 1; }
+  }
+
+  /* ===== Background atmosphere ===== */
+  .bg-atmosphere {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    background:
+      radial-gradient(circle at 10% 20%, rgba(255,216,77,0.15) 0%, transparent 50%),
+      radial-gradient(circle at 90% 80%, rgba(255,216,77,0.1) 0%, transparent 50%);
+    z-index: 0;
+  }
+
+  /* ===== Sticky progress ===== */
+  .sticky-bar {
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    background: rgba(250, 250, 240, 0.95);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-bottom: 2px solid var(--black);
+    padding: 12px 0;
+  }
+  .sticky-inner {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 0 20px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+  .brand {
+    font-family: 'Fraunces', serif;
+    font-weight: 900;
+    font-size: 18px;
+    letter-spacing: -0.02em;
+    white-space: nowrap;
+  }
+  .brand-dot {
+    background: var(--yellow);
+    padding: 2px 8px;
+    border-radius: 4px;
+  }
+  .progress-track {
+    flex: 1;
+    height: 14px;
+    background: var(--black);
+    border-radius: 100px;
+    padding: 2px;
+    position: relative;
+    overflow: hidden;
+  }
+  .progress-fill {
+    height: 100%;
+    border-radius: 100px;
+    background: linear-gradient(90deg, var(--yellow) 0%, var(--yellow-dark) 50%, var(--yellow) 100%);
+    background-size: 200% 100%;
+    animation: shimmer 3s ease-in-out infinite;
+    transition: width 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+    width: 0%;
+    min-width: 0;
+  }
+  .progress-fill.has-progress { min-width: 14px; }
+  .progress-label {
+    font-weight: 700;
+    font-size: 14px;
+    white-space: nowrap;
+    min-width: 75px;
+    text-align: right;
+  }
+  .progress-label .muted { color: var(--gray); }
+
+  /* ===== Sections ===== */
+  section { position: relative; }
+  .container { max-width: 1100px; margin: 0 auto; padding: 0 20px; }
+
+  /* ===== Hero ===== */
+  .hero {
+    padding: 80px 20px 60px;
+    max-width: 1100px;
+    margin: 0 auto;
+    position: relative;
+  }
+  .hero-blob {
+    position: absolute;
+    top: 40px;
+    right: -80px;
+    width: 280px;
+    height: 280px;
+    background: var(--yellow);
+    border-radius: 60% 40% 50% 50% / 50% 60% 40% 50%;
+    opacity: 0.6;
+    z-index: 0;
+    filter: blur(2px);
+    animation: float 6s ease-in-out infinite;
+  }
+  .hero-inner { position: relative; z-index: 1; }
+  .hero-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: var(--black);
+    color: var(--cream);
+    padding: 6px 14px;
+    border-radius: 100px;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin-bottom: 24px;
+    animation: slide-up 0.6s ease-out;
+  }
+  .hero-title {
+    font-family: 'Fraunces', serif;
+    font-weight: 900;
+    font-size: clamp(44px, 9vw, 96px);
+    line-height: 0.95;
+    letter-spacing: -0.04em;
+    animation: slide-up 0.7s ease-out;
+  }
+  .hero-highlight {
+    position: relative;
+    display: inline-block;
+  }
+  .hero-highlight span { position: relative; z-index: 1; }
+  .hero-highlight::after {
+    content: '';
+    position: absolute;
+    left: -4px;
+    right: -4px;
+    bottom: 8%;
+    height: 38%;
+    background: var(--yellow);
+    z-index: 0;
+  }
+  .hero-wave {
+    display: inline-block;
+    margin-left: 12px;
+    font-style: italic;
+    font-weight: 400;
+  }
+  .hero-desc {
+    font-size: clamp(16px, 2vw, 20px);
+    line-height: 1.5;
+    max-width: 600px;
+    margin-top: 32px;
+    color: var(--dark);
+    animation: slide-up 0.8s ease-out;
+  }
+  .hero-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-top: 32px;
+    animation: slide-up 0.9s ease-out;
+  }
+  .hero-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: white;
+    border: 1.5px solid var(--black);
+    padding: 8px 14px;
+    border-radius: 100px;
+    font-size: 13px;
+    font-weight: 600;
+  }
+
+  /* ===== Roadmap ===== */
+  .roadmap {
+    padding: 40px 20px 80px;
+    max-width: 1100px;
+    margin: 0 auto;
+    position: relative;
+  }
+  .section-eyebrow {
+    font-size: 12px;
+    font-weight: 800;
+    letter-spacing: 0.15em;
+    color: var(--gray);
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+  .section-title {
+    font-family: 'Fraunces', serif;
+    font-weight: 800;
+    font-size: clamp(28px, 4vw, 44px);
+    letter-spacing: -0.02em;
+  }
+  .section-header { margin-bottom: 48px; }
+  .section-header.dark .section-eyebrow { color: var(--yellow); }
+  .section-header.dark .section-title { color: var(--cream); }
+
+  .steps-wrapper { position: relative; }
+  .vertical-line {
+    position: absolute;
+    left: clamp(28px, 5vw, 50px);
+    top: 30px;
+    bottom: 30px;
+    width: 3px;
+    background: repeating-linear-gradient(to bottom, var(--black) 0 8px, transparent 8px 16px);
+    z-index: 0;
+  }
+
+  .step {
+    position: relative;
+    display: flex;
+    gap: clamp(16px, 3vw, 28px);
+    margin-bottom: 24px;
+    animation: slide-up 0.5s ease-out both;
+    transition: all 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+  }
+  .step:hover { transform: translateY(-4px); }
+
+  .step-node {
+    position: relative;
+    width: clamp(56px, 10vw, 100px);
+    flex-shrink: 0;
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    z-index: 1;
+  }
+  .node-circle {
+    width: clamp(56px, 10vw, 100px);
+    height: clamp(56px, 10vw, 100px);
+    border-radius: 50%;
+    background: white;
+    border: 3px solid var(--black);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Fraunces', serif;
+    font-weight: 900;
+    font-size: clamp(20px, 3vw, 32px);
+    color: var(--black);
+    box-shadow: 4px 4px 0 var(--yellow);
+    transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+    position: relative;
+  }
+  .step.done .node-circle {
+    background: var(--black);
+    color: var(--yellow);
+    box-shadow: 4px 4px 0 var(--yellow);
+  }
+  .step.final .node-circle {
+    border-radius: 20px;
+    background: var(--yellow);
+    box-shadow: 4px 4px 0 var(--black);
+  }
+  .step.final.done .node-circle {
+    background: var(--black);
+    color: var(--yellow);
+  }
+  .pulse-ring {
+    position: absolute;
+    inset: -3px;
+    border-radius: 20px;
+    border: 3px solid var(--black);
+    animation: pulse-ring 2s ease-out infinite;
+  }
+  .step.done .pulse-ring { display: none; }
+
+  .step-card {
+    flex: 1;
+    background: white;
+    border: 2.5px solid var(--black);
+    border-radius: 16px;
+    padding: clamp(20px, 2.5vw, 28px);
+    position: relative;
+    box-shadow: 6px 6px 0 var(--yellow);
+    transition: all 0.3s ease;
+  }
+  .step.done .step-card {
+    background: var(--cream-alt);
+    box-shadow: 6px 6px 0 var(--black);
+    opacity: 0.92;
+  }
+  .step-card-head {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    margin-bottom: 8px;
+    flex-wrap: wrap;
+  }
+  .step-icon {
+    width: 36px;
+    height: 36px;
+    border-radius: 10px;
+    background: var(--yellow);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+  .step-icon svg { width: 20px; height: 20px; stroke-width: 2.5; }
+  .step-meta { flex: 1; min-width: 0; }
+  .step-title {
+    font-family: 'Fraunces', serif;
+    font-weight: 700;
+    font-size: clamp(18px, 2.4vw, 24px);
+    line-height: 1.2;
+    letter-spacing: -0.01em;
+  }
+  .step.done .step-title {
+    text-decoration: line-through;
+    text-decoration-color: var(--yellow);
+    text-decoration-thickness: 3px;
+  }
+  .step-duration {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    margin-top: 6px;
+    font-size: 12px;
+    font-weight: 600;
+    color: #666;
+  }
+  .step-duration svg { width: 12px; height: 12px; }
+  .step-desc {
+    font-size: clamp(14px, 1.6vw, 15.5px);
+    line-height: 1.55;
+    margin-top: 12px;
+    color: var(--dark);
+  }
+  .step-highlight {
+    margin-top: 14px;
+    padding: 10px 14px;
+    background: var(--yellow-soft);
+    border-left: 4px solid var(--yellow-deep);
+    border-radius: 0 8px 8px 0;
+    font-size: 13px;
+    font-weight: 600;
+    font-style: italic;
+    color: #5C4500;
+  }
+  .step-actions {
+    display: flex;
+    align-items: stretch;
+    gap: 10px;
+    margin-top: 18px;
+    flex-wrap: wrap;
+  }
+
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 14px 20px;
+    border-radius: 12px;
+    font-weight: 700;
+    font-size: 14px;
+    text-decoration: none;
+    min-height: 52px;
+    border: 2.5px solid var(--black);
+    transition: all 0.2s ease;
+    text-align: center;
+    background: white;
+    color: var(--black);
+    position: relative;
+    cursor: pointer;
+    font-family: inherit;
+  }
+  .btn:active { transform: translate(2px, 2px); box-shadow: 0 0 0 0 var(--black) !important; }
+  .btn svg { width: 16px; height: 16px; stroke-width: 2.5; }
+  .btn-primary {
+    background: var(--black);
+    color: var(--yellow);
+    box-shadow: 4px 4px 0 var(--yellow);
+    flex: 1 1 auto;
+  }
+  .btn-toggle {
+    background: white;
+    color: var(--black);
+    box-shadow: 4px 4px 0 var(--gray);
+    flex: 0 0 auto;
+    min-width: 56px;
+  }
+  .step:not(.has-link) .btn-toggle { flex: 1 1 auto; }
+  .step.done .btn-toggle {
+    background: var(--yellow);
+    box-shadow: 4px 4px 0 var(--black);
+  }
+  .btn-toggle svg { width: 18px; height: 18px; stroke-width: 3; }
+
+  /* ===== Courses (dark section) ===== */
+  .courses {
+    background: var(--black);
+    padding: 80px 20px;
+    overflow: hidden;
+  }
+  .courses-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 20px;
+  }
+  .course-card {
+    border-radius: 20px;
+    padding: 28px;
+    text-decoration: none;
+    display: block;
+    position: relative;
+    overflow: hidden;
+    border: 2.5px solid var(--black);
+    transition: all 0.2s ease;
+  }
+  .course-card:active { transform: translate(2px, 2px); box-shadow: 0 0 0 0 transparent !important; }
+  .course-card.yellow {
+    background: var(--yellow);
+    color: var(--black);
+    box-shadow: 6px 6px 0 var(--black);
+  }
+  .course-card.dark {
+    background: var(--dark);
+    color: var(--cream);
+    border-color: var(--yellow);
+    box-shadow: 6px 6px 0 var(--yellow);
+  }
+  .course-icon {
+    width: 56px;
+    height: 56px;
+    border-radius: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 20px;
+  }
+  .course-card.yellow .course-icon { background: var(--black); color: var(--yellow); }
+  .course-card.dark .course-icon { background: var(--yellow); color: var(--black); }
+  .course-icon svg { width: 28px; height: 28px; stroke-width: 2.5; }
+  .course-title {
+    font-family: 'Fraunces', serif;
+    font-weight: 700;
+    font-size: 24px;
+    margin-bottom: 12px;
+    letter-spacing: -0.01em;
+    line-height: 1.15;
+  }
+  .course-desc {
+    font-size: 14.5px;
+    line-height: 1.55;
+    margin-bottom: 24px;
+    opacity: 0.85;
+  }
+  .course-cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-weight: 700;
+    font-size: 14px;
+    border-bottom: 2px solid;
+    padding-bottom: 2px;
+  }
+  .course-cta svg { width: 14px; height: 14px; stroke-width: 2.5; }
+
+  /* ===== Completion ===== */
+  .completion {
+    padding: 80px 20px;
+    max-width: 1100px;
+    margin: 0 auto;
+    text-align: center;
+  }
+  .completion.done .done-block { animation: pop-in 0.6s cubic-bezier(0.34, 1.56, 0.64, 1); }
+  .done-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    background: var(--yellow);
+    border: 4px solid var(--black);
+    box-shadow: 8px 8px 0 var(--black);
+    margin-bottom: 32px;
+  }
+  .done-icon svg { width: 56px; height: 56px; stroke-width: 2.5; }
+  .done-title {
+    font-family: 'Fraunces', serif;
+    font-size: clamp(36px, 6vw, 64px);
+    font-weight: 900;
+    letter-spacing: -0.03em;
+    margin-bottom: 16px;
+  }
+  .done-text {
+    font-size: 18px;
+    color: var(--mid);
+    max-width: 500px;
+    margin: 0 auto 32px;
+  }
+  .quote {
+    font-family: 'Fraunces', serif;
+    font-style: italic;
+    font-size: clamp(20px, 3vw, 28px);
+    color: var(--mid);
+    max-width: 600px;
+    margin: 0 auto 24px;
+  }
+  .btn-reset {
+    background: white;
+    border: 2.5px solid var(--black);
+    padding: 14px 28px;
+    border-radius: 12px;
+    font-weight: 700;
+    font-size: 14px;
+    box-shadow: 4px 4px 0 var(--gray);
+  }
+  .btn-reset-soft {
+    background: transparent;
+    border: 1.5px solid var(--gray);
+    padding: 10px 20px;
+    border-radius: 100px;
+    color: #666;
+    font-weight: 600;
+    font-size: 13px;
+    box-shadow: none;
+    min-height: auto;
+  }
+
+  /* ===== Footer ===== */
+  footer {
+    border-top: 2px solid var(--black);
+    padding: 24px 20px;
+    text-align: center;
+    font-size: 13px;
+    color: #666;
+  }
+
+  /* ===== Confetti ===== */
+  .confetti-piece {
+    position: fixed;
+    width: 12px;
+    height: 12px;
+    top: -20px;
+    z-index: 100;
+    animation: confetti-fall 3s linear forwards;
+    pointer-events: none;
+  }
+
+  /* ===== Mobile ===== */
+  @media (max-width: 768px) {
+    .hero-blob { display: none; }
+    .hero { padding: 60px 20px 40px; }
+    .courses { padding: 60px 20px; }
+    .completion { padding: 60px 20px; }
+  }
+  @media (max-width: 380px) {
+    .sticky-inner { gap: 10px; padding: 0 16px; }
+    .brand { font-size: 16px; }
+    .progress-label { font-size: 13px; min-width: 65px; }
+    .step-card { padding: 18px; }
+    .step-actions { flex-direction: column; }
+    .btn-primary, .btn-toggle { width: 100%; flex: 1 1 100%; }
+  }
+
+  /* Reduced motion */
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+    }
+  }
+</style>
+</head>
+<body>
+
+<div class="bg-atmosphere"></div>
+
+<!-- Confetti container -->
+<div id="confetti-container"></div>
+
+<!-- Sticky progress -->
+<div class="sticky-bar">
+  <div class="sticky-inner">
+    <div class="brand">KEVIN <span class="brand-dot">·</span> Tech</div>
+    <div class="progress-track"><div class="progress-fill" id="progress-fill"></div></div>
+    <div class="progress-label"><span id="progress-count">0/9</span> <span class="muted">· <span id="progress-pct">0</span>%</span></div>
+  </div>
+</div>
+
+<!-- Hero -->
+<section class="hero">
+  <div class="hero-blob"></div>
+  <div class="hero-inner">
+    <div class="hero-tag">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="width:14px;height:14px"><line x1="4" x2="4" y1="22" y2="15"/><path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1"/></svg>
+      Програма стажування
+    </div>
+    <h1 class="hero-title">
+      Привіт у команді<br/>
+      <span class="hero-highlight"><span>KEVIN</span></span>
+      <span class="hero-wave">👋</span>
+    </h1>
+    <p class="hero-desc">
+      Це твій <strong>персональний роудмап стажування</strong> на позицію технічного спеціаліста.
+      9 кроків — від першого мітингу до повноцінного виходу в роботу.
+      Прогрес зберігається автоматично, можеш повертатися сюди з будь-якого пристрою.
+    </p>
+    <div class="hero-tags">
+      <div class="hero-pill"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:14px;height:14px"><line x1="4" x2="4" y1="22" y2="15"/><path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1"/></svg> 9 кроків</div>
+      <div class="hero-pill"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:14px;height:14px"><path d="M21.42 10.922a1 1 0 0 0-.019-1.838L12.83 5.18a2 2 0 0 0-1.66 0L2.6 9.08a1 1 0 0 0 0 1.832l8.57 3.908a2 2 0 0 0 1.66 0z"/><path d="M22 10v6"/><path d="M6 12.5V16a6 3 0 0 0 12 0v-3.5"/></svg> ~8 годин навчання</div>
+      <div class="hero-pill"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:14px;height:14px"><path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1 0-5H20"/></svg> 2 курси на Kwiga</div>
+      <div class="hero-pill"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="width:14px;height:14px"><polyline points="20 6 9 17 4 12"/></svg> Прогрес зберігається</div>
+    </div>
+  </div>
+</section>
+
+<!-- Roadmap -->
+<section class="roadmap">
+  <div class="section-header">
+    <div class="section-eyebrow">Стежка стажування</div>
+    <h2 class="section-title">Твій маршрут — крок за кроком</h2>
+  </div>
+  <div class="steps-wrapper">
+    <div class="vertical-line"></div>
+    <div id="steps-container"></div>
+  </div>
+</section>
+
+<!-- Courses -->
+<section class="courses">
+  <div class="container">
+    <div class="section-header dark">
+      <div class="section-eyebrow">Бібліотека курсів</div>
+      <h2 class="section-title">Усі матеріали — в одному місці</h2>
+    </div>
+    <div class="courses-grid">
+      <a href="https://kevin-2024.kwiga.com/courses/kurs-pro-kompaniiu-kevin" target="_blank" rel="noopener noreferrer" class="course-card yellow">
+        <div class="course-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1 0-5H20"/></svg>
+        </div>
+        <h3 class="course-title">Про компанію KEVIN</h3>
+        <p class="course-desc">Базовий курс для всіх нових співробітників. Місія, цінності, продукт, команда.</p>
+        <div class="course-cta">Відкрити курс
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M15 3h6v6"/><path d="M10 14 21 3"/><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/></svg>
+        </div>
+      </a>
+      <a href="https://kevin-2024.kwiga.com/courses/onbording-tekhnichnii-spetsialist" target="_blank" rel="noopener noreferrer" class="course-card dark">
+        <div class="course-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M4 14a1 1 0 0 1-.78-1.63l9.9-10.2a.5.5 0 0 1 .86.46l-1.92 6.02A1 1 0 0 0 13 10h7a1 1 0 0 1 .78 1.63l-9.9 10.2a.5.5 0 0 1-.86-.46l1.92-6.02A1 1 0 0 0 11 14z"/></svg>
+        </div>
+        <h3 class="course-title">Проф.курс: технічний спеціаліст</h3>
+        <p class="course-desc">Спеціалізований курс твоєї ролі. Інструменти, регламенти, технічні стандарти.</p>
+        <div class="course-cta">Відкрити курс
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M15 3h6v6"/><path d="M10 14 21 3"/><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/></svg>
+        </div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- Completion / Quote -->
+<section class="completion" id="completion-section">
+  <div id="completion-content"></div>
+</section>
+
+<footer>
+  KEVIN · План стажування технічного спеціаліста · 2026
+</footer>
+
+<script>
+  // ===== ICONS (inline SVG strings) =====
+  const ICONS = {
+    sparkles: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M9.937 15.5A2 2 0 0 0 8.5 14.063l-6.135-1.582a.5.5 0 0 1 0-.962L8.5 9.936A2 2 0 0 0 9.937 8.5l1.582-6.135a.5.5 0 0 1 .963 0L14.063 8.5A2 2 0 0 0 15.5 9.937l6.135 1.581a.5.5 0 0 1 0 .964L15.5 14.063a2 2 0 0 0-1.437 1.437l-1.582 6.135a.5.5 0 0 1-.963 0z"/></svg>',
+    fileText: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"/><path d="M14 2v4a2 2 0 0 0 2 2h4"/><path d="M10 9H8"/><path d="M16 13H8"/><path d="M16 17H8"/></svg>',
+    grad: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M21.42 10.922a1 1 0 0 0-.019-1.838L12.83 5.18a2 2 0 0 0-1.66 0L2.6 9.08a1 1 0 0 0 0 1.832l8.57 3.908a2 2 0 0 0 1.66 0z"/><path d="M22 10v6"/><path d="M6 12.5V16a6 3 0 0 0 12 0v-3.5"/></svg>',
+    award: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="m15.477 12.89 1.515 8.526a.5.5 0 0 1-.81.47l-3.58-2.687a1 1 0 0 0-1.197 0l-3.586 2.686a.5.5 0 0 1-.81-.469l1.514-8.526"/><circle cx="12" cy="8" r="6"/></svg>',
+    qa: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z"/><path d="M9.1 9a3 3 0 0 1 5.82 1c0 2-3 3-3 3"/><path d="M12 17h.01"/></svg>',
+    mail: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>',
+    rocket: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09z"/><path d="m12 15-3-3a22 22 0 0 1 2-3.95A12.88 12.88 0 0 1 22 2c0 2.72-.78 7.5-6 11a22.35 22.35 0 0 1-4 2z"/><path d="M9 12H4s.55-3.03 2-4c1.62-1.08 5 0 5 0"/><path d="M12 15v5s3.03-.55 4-2c1.08-1.62 0-5 0-5"/></svg>',
+    calendar: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M8 2v4"/><path d="M16 2v4"/><rect width="18" height="18" x="3" y="4" rx="2"/><path d="M3 10h18"/></svg>',
+    check: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>',
+    extLink: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M15 3h6v6"/><path d="M10 14 21 3"/><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/></svg>',
+    party: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M5.8 11.3 2 22l10.7-3.79"/><path d="M4 3h.01"/><path d="M22 8h.01"/><path d="M15 2h.01"/><path d="M22 20h.01"/><path d="m22 2-2.24.75a2.9 2.9 0 0 0-1.96 3.12c.1.86-.57 1.63-1.45 1.63h-.38c-.86 0-1.6.6-1.76 1.44L14 10"/><path d="m22 13-1.99-.62a2.9 2.9 0 0 0-3.4 1.7l-.04.1a2.9 2.9 0 0 1-2.61 1.85"/><path d="M18 11.7c0 4.4-3.4 8-7.6 8L9 22"/></svg>'
+  };
+
+  // ===== STEPS DATA =====
+  const STEPS = [
+    { id: 'welcome', num: '01', title: 'Велком мітинг', desc: 'Знайомство з командою KEVIN, розуміння місії школи, перші враження. Тобі покажуть, з ким ти будеш працювати щодня.', icon: 'sparkles', duration: '~1 година' },
+    { id: 'nda', num: '02', title: 'Підпис NDA', desc: 'Стандартна процедура — договір про нерозголошення комерційної інформації. Швидко і без зайвої бюрократії.', icon: 'fileText', duration: '~15 хвилин' },
+    { id: 'questionnaire', num: '03', title: 'Заповнення анкети співробітника', desc: 'Коротка форма з персональними даними для HR-обліку. Заповнюється один раз — далі вся внутрішня логістика буде автоматизованою.', icon: 'fileText', duration: '~10 хвилин', link: 'https://docs.google.com/forms/d/e/1FAIpQLSfzY86bA8ZYlU2tPurjt4hh0w59q_9_sVVMZTsubiYv8RzaKQ/viewform', linkLabel: 'Відкрити форму' },
+    { id: 'company-course', num: '04', title: 'Старт навчання: курс про компанію', desc: 'Цінності, історія, продукт, як влаштована команда. Це фундамент — без розуміння компанії важко стати її частиною.', icon: 'grad', duration: '~2 години', link: 'https://kevin-2024.kwiga.com/courses/kurs-pro-kompaniiu-kevin', linkLabel: 'Перейти до курсу' },
+    { id: 'quiz', num: '05', title: 'Практичні (квіз) у першому курсі', desc: 'Закріплення матеріалу через короткі тести. Не складно — це самоперевірка, що ти на одній хвилі з нами.', icon: 'award', duration: 'у межах курсу' },
+    { id: 'pro-course', num: '06', title: 'Проф.курс: технічний спеціаліст', desc: 'Глибокий технічний онбординг — інструменти, процеси, регламенти роботи саме твоєї ролі. Це ядро твоєї підготовки.', icon: 'grad', duration: '~4-6 годин', link: 'https://kevin-2024.kwiga.com/courses/onbording-tekhnichnii-spetsialist', linkLabel: 'Перейти до курсу' },
+    { id: 'qa', num: '07', title: 'QA-сесія', desc: 'Жива сесія Q&A — твій час задати всі питання, що накопичились під час навчання. Підготуй список — це найкорисніша година твого онбордингу.', icon: 'qa', duration: '~1 година', highlight: 'Підготуй питання заздалегідь!' },
+    { id: 'access', num: '08', title: 'Підключення до пошти та сервісів', desc: 'Корпоративна пошта, Worksection, Kwiga, Telegram-чати, доступи до робочих таблиць. Все, з чим ти працюватимеш щодня.', icon: 'mail', duration: '~30 хвилин' },
+    { id: 'launch', num: '09', title: 'Вихід у роботу', desc: 'Все! Ти повноцінна частина команди KEVIN. Перший робочий день — і вперед, до результатів 🚀', icon: 'rocket', duration: 'безмежно', isFinal: true }
+  ];
+
+  const STORAGE_KEY = 'kevin_tech_onboarding_progress_v1';
+
+  // ===== STATE =====
+  let completed = {};
+  let prevAllDone = false;
+
+  // ===== STORAGE =====
+  function loadProgress() {
+    try {
+      const raw = localStorage.getItem(STORAGE_KEY);
+      if (raw) {
+        const data = JSON.parse(raw);
+        completed = data.completed || {};
+      }
+    } catch (e) { /* ignore */ }
+  }
+  function saveProgress() {
+    try {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify({ completed, updatedAt: Date.now() }));
+    } catch (e) { /* ignore */ }
+  }
+
+  // ===== RENDER =====
+  function renderSteps() {
+    const container = document.getElementById('steps-container');
+    container.innerHTML = '';
+    STEPS.forEach((step, idx) => {
+      const isDone = !!completed[step.id];
+      const stepEl = document.createElement('div');
+      stepEl.className = 'step' + (isDone ? ' done' : '') + (step.isFinal ? ' final' : '') + (step.link ? ' has-link' : '');
+      stepEl.style.animationDelay = (idx * 80) + 'ms';
+
+      let nodeContent;
+      if (isDone) nodeContent = ICONS.check;
+      else if (step.isFinal && allComplete()) nodeContent = ICONS.rocket;
+      else nodeContent = step.num;
+
+      const pulseHTML = (step.isFinal && !isDone) ? '<div class="pulse-ring"></div>' : '';
+      const highlightHTML = step.highlight ? `<div class="step-highlight">💡 ${step.highlight}</div>` : '';
+      const linkHTML = step.link
+        ? `<a href="${step.link}" target="_blank" rel="noopener noreferrer" class="btn btn-primary">${ICONS.extLink}<span>${step.linkLabel}</span></a>`
+        : '';
+      const toggleLabel = isDone
+        ? `${ICONS.check}<span>Виконано</span>`
+        : `<span>Позначити готово</span>`;
+
+      stepEl.innerHTML = `
+        <div class="step-node">
+          <div class="node-circle">${nodeContent}${pulseHTML}</div>
+        </div>
+        <div class="step-card">
+          <div class="step-card-head">
+            <div class="step-icon">${ICONS[step.icon]}</div>
+            <div class="step-meta">
+              <h3 class="step-title">${step.title}</h3>
+              <div class="step-duration">${ICONS.calendar} ${step.duration}</div>
+            </div>
+          </div>
+          <p class="step-desc">${step.desc}</p>
+          ${highlightHTML}
+          <div class="step-actions">
+            ${linkHTML}
+            <button class="btn btn-toggle" data-step="${step.id}" aria-label="${isDone ? 'Скасувати виконання' : 'Позначити виконано'}">${toggleLabel}</button>
+          </div>
+        </div>
+      `;
+      container.appendChild(stepEl);
+    });
+
+    container.querySelectorAll('[data-step]').forEach(btn => {
+      btn.addEventListener('click', () => toggleStep(btn.getAttribute('data-step')));
+    });
+  }
+
+  function renderProgress() {
+    const count = countCompleted();
+    const total = STEPS.length;
+    const pct = Math.round((count / total) * 100);
+    const fill = document.getElementById('progress-fill');
+    fill.style.width = pct + '%';
+    fill.classList.toggle('has-progress', pct > 0);
+    document.getElementById('progress-count').textContent = `${count}/${total}`;
+    document.getElementById('progress-pct').textContent = pct;
+  }
+
+  function renderCompletion() {
+    const section = document.getElementById('completion-section');
+    const content = document.getElementById('completion-content');
+    const count = countCompleted();
+    const allDone = allComplete();
+    section.classList.toggle('done', allDone);
+
+    if (allDone) {
+      content.innerHTML = `
+        <div class="done-block">
+          <div class="done-icon">${ICONS.party}</div>
+          <h2 class="done-title">Стажування завершено! 🎉</h2>
+          <p class="done-text">Усі 9 кроків позаду. Ласкаво просимо в команду KEVIN — час показати, на що ти здатний(на).</p>
+          <button class="btn btn-reset" id="reset-btn">Скинути прогрес</button>
+        </div>
+      `;
+    } else {
+      const resetHTML = count > 0 ? '<button class="btn btn-reset btn-reset-soft" id="reset-btn">Скинути прогрес</button>' : '';
+      content.innerHTML = `
+        <div class="quote">«Кожен експерт колись був новачком. Ти на правильному шляху.»</div>
+        ${resetHTML}
+      `;
+    }
+    const resetBtn = document.getElementById('reset-btn');
+    if (resetBtn) resetBtn.addEventListener('click', resetProgress);
+  }
+
+  // ===== ACTIONS =====
+  function countCompleted() {
+    return Object.values(completed).filter(Boolean).length;
+  }
+  function allComplete() {
+    return countCompleted() === STEPS.length;
+  }
+  function toggleStep(id) {
+    if (completed[id]) delete completed[id];
+    else completed[id] = true;
+    saveProgress();
+    const allDoneNow = allComplete();
+    renderSteps();
+    renderProgress();
+    renderCompletion();
+    if (allDoneNow && !prevAllDone) fireConfetti();
+    prevAllDone = allDoneNow;
+  }
+  function resetProgress() {
+    if (!confirm('Скинути весь прогрес? Це не можна буде скасувати.')) return;
+    completed = {};
+    prevAllDone = false;
+    try { localStorage.removeItem(STORAGE_KEY); } catch (e) {}
+    renderSteps();
+    renderProgress();
+    renderCompletion();
+  }
+
+  // ===== CONFETTI =====
+  function fireConfetti() {
+    const container = document.getElementById('confetti-container');
+    const colors = ['#FFD84D', '#1A1A1A', '#F5C800', '#E8522A', '#2E8B47'];
+    for (let i = 0; i < 80; i++) {
+      const piece = document.createElement('div');
+      piece.className = 'confetti-piece';
+      piece.style.left = (Math.random() * 100) + '%';
+      piece.style.background = colors[Math.floor(Math.random() * colors.length)];
+      piece.style.animationDelay = (Math.random() * 2) + 's';
+      piece.style.animationDuration = (2 + Math.random() * 2) + 's';
+      piece.style.borderRadius = Math.random() > 0.5 ? '50%' : '2px';
+      const size = 8 + Math.random() * 8;
+      piece.style.width = size + 'px';
+      piece.style.height = size + 'px';
+      container.appendChild(piece);
+      setTimeout(() => piece.remove(), 5000);
+    }
+  }
+
+  // ===== INIT =====
+  loadProgress();
+  prevAllDone = allComplete();
+  renderSteps();
+  renderProgress();
+  renderCompletion();
+</script>
+
+</body>
+</html>
