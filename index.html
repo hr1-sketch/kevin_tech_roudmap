@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="uk">
 <head>
@@ -415,6 +416,110 @@
     font-style: italic;
     color: #5C4500;
   }
+
+  /* ===== Step details (expanded content) ===== */
+  .step-details {
+    margin-top: 18px;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+  }
+  .details-section {
+    background: var(--cream-alt);
+    border: 2px solid var(--black);
+    border-radius: 12px;
+    padding: 16px 18px;
+    box-shadow: 4px 4px 0 var(--yellow);
+  }
+  .details-section--accent {
+    background: var(--yellow-soft);
+    box-shadow: 4px 4px 0 var(--black);
+  }
+  .details-section--rule {
+    background: #FFFFFF;
+    box-shadow: 4px 4px 0 #D8D8D0;
+  }
+  .details-h4 {
+    font-family: 'Fraunces', serif;
+    font-size: 15px;
+    font-weight: 800;
+    color: var(--black);
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    line-height: 1.3;
+  }
+  .details-emoji {
+    font-size: 18px;
+    line-height: 1;
+  }
+  .details-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  .details-list li {
+    position: relative;
+    padding-left: 18px;
+    font-size: 13.5px;
+    line-height: 1.55;
+    color: var(--dark);
+  }
+  .details-list li::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 8px;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--black);
+  }
+  .details-list--ol {
+    counter-reset: details-counter;
+    margin-top: 8px;
+  }
+  .details-list--ol li {
+    counter-increment: details-counter;
+    padding-left: 26px;
+  }
+  .details-list--ol li::before {
+    content: counter(details-counter);
+    background: var(--black);
+    color: var(--yellow);
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    top: 1px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 10px;
+    font-weight: 800;
+    font-family: 'Manrope', sans-serif;
+  }
+  .details-list strong { font-weight: 700; color: var(--black); }
+  .details-note {
+    margin-top: 4px;
+    padding: 14px 16px;
+    background: var(--black);
+    color: var(--cream);
+    border-radius: 12px;
+    font-size: 13px;
+    line-height: 1.6;
+  }
+  .details-note strong { color: var(--yellow); font-weight: 700; }
+  .details-note .details-list { margin-top: 10px; }
+  .details-note .details-list li { color: var(--cream); }
+  .details-note .details-list--ol li::before {
+    background: var(--yellow);
+    color: var(--black);
+  }
+  .details-note .details-list strong { color: var(--yellow); }
   .step-actions {
     display: flex;
     align-items: stretch;
@@ -624,6 +729,9 @@
     .hero { padding: 60px 20px 40px; }
     .courses { padding: 60px 20px; }
     .completion { padding: 60px 20px; }
+    .details-section { padding: 14px 16px; }
+    .details-h4 { font-size: 14px; }
+    .details-list li { font-size: 13px; }
   }
   @media (max-width: 380px) {
     .sticky-inner { gap: 10px; padding: 0 16px; }
@@ -632,6 +740,9 @@
     .step-card { padding: 18px; }
     .step-actions { flex-direction: column; }
     .btn-primary, .btn-toggle { width: 100%; flex: 1 1 100%; }
+    .details-section { padding: 12px 14px; box-shadow: 3px 3px 0 var(--yellow); }
+    .details-section--accent { box-shadow: 3px 3px 0 var(--black); }
+    .details-section--rule { box-shadow: 3px 3px 0 #D8D8D0; }
   }
 
   /* Reduced motion */
@@ -761,12 +872,59 @@
     { id: 'welcome', num: '01', title: 'Велком мітинг', desc: 'Знайомство з командою KEVIN, розуміння місії школи, перші враження. Тобі покажуть, з ким ти будеш працювати щодня.', icon: 'sparkles', duration: '~1 година' },
     { id: 'nda', num: '02', title: 'Підпис NDA', desc: 'Стандартна процедура — договір про нерозголошення комерційної інформації. Швидко і без зайвої бюрократії.', icon: 'fileText', duration: '~15 хвилин' },
     { id: 'questionnaire', num: '03', title: 'Заповнення анкети співробітника', desc: 'Коротка форма з персональними даними для HR-обліку. Заповнюється один раз — далі вся внутрішня логістика буде автоматизованою.', icon: 'fileText', duration: '~10 хвилин', link: 'https://docs.google.com/forms/d/e/1FAIpQLSfzY86bA8ZYlU2tPurjt4hh0w59q_9_sVVMZTsubiYv8RzaKQ/viewform', linkLabel: 'Відкрити форму' },
-    { id: 'company-course', num: '04', title: 'Старт навчання: курс про компанію', desc: 'Цінності, історія, продукт, як влаштована команда. Це фундамент — без розуміння компанії важко стати її частиною.', icon: 'grad', duration: '~2 години', link: 'https://kevin-2024.kwiga.com/courses/kurs-pro-kompaniiu-kevin', linkLabel: 'Перейти до курсу' },
-    { id: 'quiz', num: '05', title: 'Практичні (квіз) у першому курсі', desc: 'Закріплення матеріалу через короткі тести. Не складно — це самоперевірка, що ти на одній хвилі з нами.', icon: 'award', duration: 'у межах курсу' },
-    { id: 'pro-course', num: '06', title: 'Проф.курс: технічний спеціаліст', desc: 'Глибокий технічний онбординг — інструменти, процеси, регламенти роботи саме твоєї ролі. Це ядро твоєї підготовки.', icon: 'grad', duration: '~4-6 годин', link: 'https://kevin-2024.kwiga.com/courses/onbording-tekhnichnii-spetsialist', linkLabel: 'Перейти до курсу' },
-    { id: 'qa', num: '07', title: 'QA-сесія', desc: 'Жива сесія Q&A — твій час задати всі питання, що накопичились під час навчання. Підготуй список — це найкорисніша година твого онбордингу.', icon: 'qa', duration: '~1 година', highlight: 'Підготуй питання заздалегідь!' },
-    { id: 'access', num: '08', title: 'Підключення до пошти та сервісів', desc: 'Корпоративна пошта, Worksection, Kwiga, Telegram-чати, доступи до робочих таблиць. Все, з чим ти працюватимеш щодня.', icon: 'mail', duration: '~30 хвилин' },
-    { id: 'launch', num: '09', title: 'Вихід у роботу', desc: 'Все! Ти повноцінна частина команди KEVIN. Перший робочий день — і вперед, до результатів 🚀', icon: 'rocket', duration: 'безмежно', isFinal: true }
+    { id: 'access', num: '04', title: 'Підключення до пошти', desc: 'Створення корпоративної пошти для нового технічного спеціаліста та видача доступу до неї.', icon: 'mail', duration: '~30 хвилин', highlight: 'Доступ до всіх файлів онбордингу (книга техн. напрямку, регламенти, матеріали курсів) — тільки з робочої пошти. Це вимога корпоративної безпеки KEVIN.' },
+    { id: 'company-course', num: '05', title: 'Старт навчання: курс про компанію', desc: 'Цінності, історія, продукт, як влаштована команда. Це фундамент — без розуміння компанії важко стати її частиною.', icon: 'grad', duration: '~2 години', link: 'https://kevin-2024.kwiga.com/courses/kurs-pro-kompaniiu-kevin', linkLabel: 'Перейти до курсу' },
+    { id: 'quiz', num: '06', title: 'Практичні (квіз) у першому курсі', desc: 'Закріплення матеріалу через короткі тести. Не складно — це самоперевірка, що ти на одній хвилі з нами.', icon: 'award', duration: 'у межах курсу' },
+    { id: 'pro-course', num: '07', title: 'Проф.курс: технічний спеціаліст', desc: 'Глибокий технічний онбординг — інструменти, процеси, регламенти роботи саме твоєї ролі. Це ядро твоєї підготовки.', icon: 'grad', duration: '~4-6 годин', link: 'https://kevin-2024.kwiga.com/courses/onbording-tekhnichnii-spetsialist', linkLabel: 'Перейти до курсу' },
+    { id: 'qa', num: '08', title: 'QA-сесія зі COO', desc: 'Жива сесія Q&A зі COO — твій час задати всі питання, що накопичились під час навчання. Підготуй список — це найкорисніша година твого онбордингу.', icon: 'qa', duration: 'вечірній час', highlight: 'Підготуй питання заздалегідь!', details: `
+      <div class="details-section">
+        <h4 class="details-h4">Формат сесії</h4>
+        <ul class="details-list">
+          <li>Вечірній час</li>
+          <li>Після ознайомлення з усіма матеріалами роадмепу</li>
+          <li>Слоти видає COO — коли буде розуміння точного старту</li>
+        </ul>
+      </div>
+    ` },
+    { id: 'launch', num: '09', title: 'Вихід у роботу', desc: 'Все! Ти повноцінна частина команди KEVIN. Перший робочий день — і вперед, до результатів 🚀', icon: 'rocket', duration: 'перший робочий день', isFinal: true, details: `
+      <div class="details-section">
+        <h4 class="details-h4"><span class="details-emoji">📅</span> Перший робочий день — що робиш</h4>
+        <ul class="details-list">
+          <li><strong>Зустріч з COO на дейліку о 10:30</strong> — знайомство з форматом дейліків та щоденною звітністю</li>
+          <li><strong>Видача доступів</strong> до Zoho, UnitAlk, Leeloo, WorkSection</li>
+          <li><strong>QA-сесія з поточним технічним спеціалістом</strong> — відповіді на внутрішньо-технічні питання, що з'явились під час проходження роадмепу. Підготувати список питань заздалегідь.</li>
+          <li><strong>Розібратися в Zoho Analytics</strong> — поточні дані, дашборди та таблиці. Результат: проста зведена таблиця по даним з ТЗ.</li>
+        </ul>
+      </div>
+
+      <div class="details-section details-section--accent">
+        <h4 class="details-h4"><span class="details-emoji">🎯</span> Артефакти за перший робочий день</h4>
+        <ul class="details-list">
+          <li>Заповнений план на день (дейлі-звіт)</li>
+          <li>Заповнений факт на день (дейлі-звіт)</li>
+          <li>Закрита задача у WorkSection</li>
+          <li>Отримані доступи (Zoho, UnitAlk, Leeloo, WorkSection)</li>
+          <li>Зведена таблиця в Zoho Analytics за ТЗ</li>
+        </ul>
+      </div>
+
+      <div class="details-section details-section--rule">
+        <h4 class="details-h4"><span class="details-emoji">▶</span> Стандарт щоденної роботи (правила)</h4>
+        <ul class="details-list">
+          <li>Дейлік щодня (пн–пт) о 10:30, таймінг 15–30 хв</li>
+          <li>Заповнений дейлі-звіт (факт/план) — за регламентом</li>
+          <li>Усі задачі у WorkSection — у правильних статусах, актуалізовані (за регламентом)</li>
+        </ul>
+      </div>
+
+      <div class="details-note">
+        <strong>Примітка щодо QA-сесій.</strong> На роадмепі тепер <strong>дві різні QA-сесії</strong>:
+        <ol class="details-list details-list--ol">
+          <li><strong>QA-сесія у Кроці 8</strong> — зі COO, вечірній час, після ознайомлення з усіма матеріалами роадмепу.</li>
+          <li><strong>QA-сесія у Кроці 9</strong> — з поточним технічним спеціалістом, у перший робочий день, по внутрішньо-технічних питаннях.</li>
+        </ol>
+      </div>
+    ` }
   ];
 
   const STORAGE_KEY = 'kevin_tech_onboarding_progress_v1';
@@ -808,6 +966,7 @@
 
       const pulseHTML = (step.isFinal && !isDone) ? '<div class="pulse-ring"></div>' : '';
       const highlightHTML = step.highlight ? `<div class="step-highlight">💡 ${step.highlight}</div>` : '';
+      const detailsHTML = step.details ? `<div class="step-details">${step.details}</div>` : '';
       const linkHTML = step.link
         ? `<a href="${step.link}" target="_blank" rel="noopener noreferrer" class="btn btn-primary">${ICONS.extLink}<span>${step.linkLabel}</span></a>`
         : '';
@@ -829,6 +988,7 @@
           </div>
           <p class="step-desc">${step.desc}</p>
           ${highlightHTML}
+          ${detailsHTML}
           <div class="step-actions">
             ${linkHTML}
             <button class="btn btn-toggle" data-step="${step.id}" aria-label="${isDone ? 'Скасувати виконання' : 'Позначити виконано'}">${toggleLabel}</button>
